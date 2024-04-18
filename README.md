@@ -7,6 +7,16 @@ Bem-vindo ao projeto da API de Filmes! Este projeto tem como objetivo fornecer o
 - **NestJS**: Um framework Node.js progressivo para construir aplicativos eficientes, confiáveis e escaláveis no lado do servidor.
 - **Prisma**: Um kit de ferramentas de banco de dados moderno para TypeScript e Node.js que substitui ORMs tradicionais.
 
+---
+
+## Token JWT válido para uso na api
+
+{
+"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVmZDAxYjc0ZDkzZjhjYjk2ODFkZSIsImZ1bGxOYW1lIjoid2ViZXIgY29zdGEiLCJpYXQiOjE3MTIzMzIxMDAsImV4cCI6MTcyODA1NjkwMH0.AlsfGRQEIEhf8CdtA8fOJqXy0swFU8qBNvpxN0v3I20"
+}
+
+---
+
 ## Endpoints
 
 ### 1. Criar Filme
