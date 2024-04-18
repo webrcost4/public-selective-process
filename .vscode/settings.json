@@ -1,0 +1,5 @@
+{
+    "dataworkspace.excludedProjects": [
+        "selective-process/selective-process.sqlproj"
+    ]
+}
