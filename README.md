@@ -7,15 +7,11 @@ Bem-vindo ao projeto da API de Filmes! Este projeto tem como objetivo fornecer o
 - **NestJS**: Um framework Node.js progressivo para construir aplicativos eficientes, confiáveis e escaláveis no lado do servidor.
 - **Prisma**: Um kit de ferramentas de banco de dados moderno para TypeScript e Node.js que substitui ORMs tradicionais.
 
----
-
-## Token JWT válido para uso na api
+## Token JWT válido para uso na api (deve ser usado em todas as requisições).
 
 {
 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVmZDAxYjc0ZDkzZjhjYjk2ODFkZSIsImZ1bGxOYW1lIjoid2ViZXIgY29zdGEiLCJpYXQiOjE3MTIzMzIxMDAsImV4cCI6MTcyODA1NjkwMH0.AlsfGRQEIEhf8CdtA8fOJqXy0swFU8qBNvpxN0v3I20"
 }
-
----
 
 ## Endpoints
 
@@ -71,6 +67,8 @@ Bem-vindo ao projeto da API de Filmes! Este projeto tem como objetivo fornecer o
 
 Este projeto marcou meu primeiro contato tanto com o NestJS quanto com o Prisma. Foi uma oportunidade empolgante para aprender sobre o desenvolvimento de APIs utilizando essas tecnologias modernas. A integração do NestJS com o Prisma proporcionou uma experiência de desenvolvimento suave e eficiente.
 
-## Links do Projeto
+## Links
 
 - API Hospedada na Vercel: [link-da-api](https://public-selective-process.vercel.app/)
+- Linkedin: [linkedin](https://www.linkedin.com/in/webersilv4)
+- Sobre mim: [linkedin](https://weber.vercel.app/)
