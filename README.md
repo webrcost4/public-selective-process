@@ -73,4 +73,4 @@ Este projeto marcou meu primeiro contato tanto com o NestJS quanto com o Prisma.
 
 ## Links do Projeto
 
-- API Hospedada na Vercel: [link-da-api](https://sua-api.vercel.app)
+- API Hospedada na Vercel: [link-da-api](https://public-selective-process.vercel.app/)
