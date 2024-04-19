@@ -26,23 +26,31 @@ let AppController = class AppController {
     async createMovie(body, res) {
         try {
             const { title, direction, year, filmImage } = body;
-            if (await this.moviesService.listOneMovie(title))
-                return res
-                    .status(common_1.HttpStatus.BAD_REQUEST)
-                    .json({ error: 'Este filme já existe, tente atualiza-lo.' });
-            if (!validator_1.default.isNumeric(String(year)))
-                return res
-                    .status(common_1.HttpStatus.BAD_REQUEST)
-                    .json({ error: 'Campo data não é valido' });
-            if (!validator_1.default.isURL(filmImage))
-                return res
-                    .status(common_1.HttpStatus.BAD_REQUEST)
-                    .json({ error: 'URL da imagem não é valida.' });
-            if (!validator_1.default.isAlphanumeric(title, 'pt-BR', { ignore: ' ' }) ||
-                !validator_1.default.isAlphanumeric(title, 'pt-BR', { ignore: ' ' }))
-                return res.status(common_1.HttpStatus.BAD_REQUEST).json({
-                    error: 'Os campos titulo e direção do filme devem ser preenchidos!',
-                });
+            if (title !== undefined || null) {
+                if (await this.moviesService.listOneMovie(title))
+                    return res
+                        .status(common_1.HttpStatus.BAD_REQUEST)
+                        .json({ error: 'Este filme já existe, tente atualiza-lo.' });
+            }
+            if (year !== undefined || null) {
+                if (!validator_1.default.isNumeric(String(year)))
+                    return res
+                        .status(common_1.HttpStatus.BAD_REQUEST)
+                        .json({ error: 'Campo data não é valido' });
+            }
+            if (filmImage !== undefined || null) {
+                if (!validator_1.default.isURL(filmImage))
+                    return res
+                        .status(common_1.HttpStatus.BAD_REQUEST)
+                        .json({ error: 'URL da imagem não é valida.' });
+            }
+            if ((title && direction) !== undefined || null) {
+                if (!validator_1.default.isAlphanumeric(title, 'pt-BR', { ignore: ' ' }) ||
+                    !validator_1.default.isAlphanumeric(direction, 'pt-BR', { ignore: /[,\s]+/g }))
+                    return res.status(common_1.HttpStatus.BAD_REQUEST).json({
+                        error: 'Os campos titulo e direção do filme devem ser preenchidos!',
+                    });
+            }
             const movie = await this.moviesService.createMovie({
                 title,
                 direction,
@@ -52,6 +60,7 @@ let AppController = class AppController {
             return res.status(common_1.HttpStatus.CREATED).json(movie);
         }
         catch (error) {
+            console.log(error);
             res
                 .status(common_1.HttpStatus.BAD_REQUEST)
                 .json({ message: 'Falha ao criar um filme' });
@@ -60,8 +69,9 @@ let AppController = class AppController {
     async listAllMovies(res) {
         try {
             const moviesInChache = await this.RedisMovies.get('movies');
-            if (moviesInChache)
+            if (moviesInChache) {
                 return res.json({ moviesInChache, origin: 'cache' });
+            }
             const movies = await this.moviesService.listAllMovies();
             this.RedisMovies.set('movies', JSON.stringify(movies));
             return res.json({ movies, origin: 'DB' });
@@ -88,7 +98,7 @@ let AppController = class AppController {
                     data = { ...data, title };
             }
             if (direction !== undefined || null) {
-                if (validator_1.default.isAlphanumeric(direction, 'pt-BR', { ignore: ' ' }))
+                if (validator_1.default.isAlphanumeric(direction, 'pt-BR', { ignore: /[,\s]+/g }))
                     data = { ...data, direction };
             }
             if (filmImage && validator_1.default.isURL(filmImage))

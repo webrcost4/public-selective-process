@@ -19,7 +19,7 @@ let RedisService = class RedisService {
         });
     }
     async set(key, value) {
-        await this.redisClient.set(key, value, 'EX', 30);
+        await this.redisClient.set(key, value, 'EX', 15);
     }
     async get(key) {
         const movies = await this.redisClient.get(key);
