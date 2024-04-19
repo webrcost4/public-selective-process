@@ -15,7 +15,7 @@ export class RedisService {
    ** Set a key-value pair in Redis with an expiration time of 30 seconds.
    */
   async set(key: string, value: string): Promise<void> {
-    await this.redisClient.set(key, value, 'EX', 30);
+    await this.redisClient.set(key, value, 'EX', 15);
   }
 
   /*

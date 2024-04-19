@@ -49,37 +49,44 @@ export class AppController {
       /*
        ** Checking if the movie already exists in the database
        */
-      if (await this.moviesService.listOneMovie(title))
-        return res
-          .status(HttpStatus.BAD_REQUEST)
-          .json({ error: 'Este filme já existe, tente atualiza-lo.' });
+      if (title !== undefined || null) {
+        if (await this.moviesService.listOneMovie(title))
+          return res
+            .status(HttpStatus.BAD_REQUEST)
+            .json({ error: 'Este filme já existe, tente atualiza-lo.' });
+      }
 
       /*
        ** Valid Date format
        */
-      if (!validator.isNumeric(String(year)))
-        return res
-          .status(HttpStatus.BAD_REQUEST)
-          .json({ error: 'Campo data não é valido' });
+      if (year !== undefined || null) {
+        if (!validator.isNumeric(String(year)))
+          return res
+            .status(HttpStatus.BAD_REQUEST)
+            .json({ error: 'Campo data não é valido' });
+      }
 
       /*
        ** Checking if the image URL is valid.
        */
-      if (!validator.isURL(filmImage))
-        return res
-          .status(HttpStatus.BAD_REQUEST)
-          .json({ error: 'URL da imagem não é valida.' });
-
+      if (filmImage !== undefined || null) {
+        if (!validator.isURL(filmImage))
+          return res
+            .status(HttpStatus.BAD_REQUEST)
+            .json({ error: 'URL da imagem não é valida.' });
+      }
       /*
        ** Checking if the title and direction fields are empty
        */
-      if (
-        !validator.isAlphanumeric(title, 'pt-BR', { ignore: ' ' }) ||
-        !validator.isAlphanumeric(title, 'pt-BR', { ignore: ' ' })
-      )
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          error: 'Os campos titulo e direção do filme devem ser preenchidos!',
-        });
+      if ((title && direction) !== undefined || null) {
+        if (
+          !validator.isAlphanumeric(title, 'pt-BR', { ignore: ' ' }) ||
+          !validator.isAlphanumeric(direction, 'pt-BR', { ignore: /[,\s]+/g })
+        )
+          return res.status(HttpStatus.BAD_REQUEST).json({
+            error: 'Os campos titulo e direção do filme devem ser preenchidos!',
+          });
+      }
 
       /*
        ** Returning the value added to the database
@@ -93,6 +100,7 @@ export class AppController {
 
       return res.status(HttpStatus.CREATED).json(movie);
     } catch (error) {
+      console.log(error);
       res
         .status(HttpStatus.BAD_REQUEST)
         .json({ message: 'Falha ao criar um filme' });
@@ -111,7 +119,9 @@ export class AppController {
   > {
     try {
       const moviesInChache = await this.RedisMovies.get('movies');
-      if (moviesInChache) return res.json({ moviesInChache, origin: 'cache' });
+      if (moviesInChache) {
+        return res.json({ moviesInChache, origin: 'cache' });
+      }
 
       const movies = await this.moviesService.listAllMovies();
       this.RedisMovies.set('movies', JSON.stringify(movies));
@@ -156,7 +166,7 @@ export class AppController {
 
       /* Direction validation */
       if (direction !== undefined || null) {
-        if (validator.isAlphanumeric(direction, 'pt-BR', { ignore: ' ' }))
+        if (validator.isAlphanumeric(direction, 'pt-BR', { ignore: /[,\s]+/g }))
           data = { ...data, direction };
       }
 
