@@ -6,10 +6,8 @@ export class RedisService {
   private readonly redisClient: Redis;
 
   constructor() {
-    this.redisClient = new Redis({
-      host: process.env.REDIS_DB_HOST,
-      port: Number(process.env.REDIS_DB_PORT),
-      password: process.env.REDIS_DB_PASS,
+    this.redisClient = new Redis(process.env.REDIS_DB, {
+      tls: {},
     });
   }
 
